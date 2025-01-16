@@ -1,291 +1,328 @@
-local WindUI = loadstring(game:HttpGet("https://tree-hub.vercel.app/api/UI/WindUI"))()
-local Version = "1.4.0"
-local WindUI = loadstring(game:HttpGet("https://tree-hub.vercel.app/api/UI/WindUI/" .. Version))()
-
-local Window = WindUI:CreateWindow({
-    Title = "lol.wtf", -- UI Title
-    Icon = "https://cdn.discordapp.com/attachments/1327852730533806163/1328898819181645875/1000003223-removebg-preview.png?ex=678909b8&is=6787b838&hm=129e1af1c80b5e6a3290341f12ed8a3e4dd302bdd4f007ec6e83f778463d828c&", -- Url or rbxassetid or lucide
-    Author = "Private Script Premium", -- Author & Creator
-    Folder = "CloudHub", -- Folder name for saving data (And key)
-    Size = UDim2.fromOffset(580, 460), -- UI Size
-    KeySystem = { -- Creates key system
-        Key = "2e35efeafee9cd5c78dd3be3f02fa469af441", -- key
-        Note = "Keys Unicas Nem Tetnta, So Amigos Ou Buyers Tem a Key", -- Note
-        URL = "https://discord.gg/YezNnKQZFw", -- URL To get key (example: Discord)
-        SaveKey = true, -- Saves the key in the folder specified above
-    }, 
-    Transparent = true,-- UI Transparency
-    Theme = "Dark", -- UI Theme
-    SideBarWidth = 170, -- UI Sidebar Width (number)
-    HasOutline = true, -- Adds Outlines to the window
-})
-
-Window:EditOpenButton({
-    Title = "lol.wtf",
-    Icon = "https://cdn.discordapp.com/attachments/1327852730533806163/1328898819181645875/1000003223-removebg-preview.png?ex=678909b8&is=6787b838&hm=129e1af1c80b5e6a3290341f12ed8a3e4dd302bdd4f007ec6e83f778463d828c&",
-    CornerRadius = UDim.new(0,10),
-    StrokeThickness = 2,
-    Color = ColorSequence.new( -- gradient
-        Color3.fromHex("000000"), 
-        Color3.fromHex("000000")
-    )
-})
-
-local LockTab = Window:Tab({
-    Title = "Lock",
-    Icon = "96690831316719", -- lucide or rbxassetid
-})
-
-local Section = LockTab:Section({ 
-    Title = "Aimbot",
-    TextXAlignment = "Left",
-    TextSize = 17, -- Default Size
-})
-
-local Button = LockTab:Button({
-    Title = "Camlock And AirShot",
-    Desc = "Pc Key.Q",
-    Callback = function()
-        getgenv().Mist = {
-            ["Main"] = {
-                ["Prediction"] = 0.1666279438888,
-                ["AutoPrediction"] = false,-- // 100 ping
-                ["AimPart"] = "HumanoidRootPart",
-                ["ToggleKey"] = "q" -- // FOR PC
-            },
-            ["Misc"] = {
-                ["AutoAir"] = true,
-                ["AntiGroundShots"] = true -- // keep this true for better experience
-            }
+function setup_bypass()
+    -- Configurações gerais
+    local config = {
+        blockedPatterns = {
+            -- Padrões de detecção de cheat mais abrangentes
+            "Cheat", "Exploit", "Hack", "Script", "Inject", 
+            "Memory", "Speed", "Teleport", "Noclip", "Fly",
+            
+            -- Padrões adicionais de segurança
+            "Bypass", "Macro", "AutoFarm", "WallHack", "AimBot", 
+            "SpeedHack", "NoClip", "InfiniteResource", "ModifiedClient",
+            
+            -- Termos relacionados a modificações de jogo
+            "GameModifier", "ClientModification", "RuntimePatch", 
+            "MemoryManipulation", "ProcessInjection"
+        },
+        fakeExecutors = {
+            "Roblox Studio", "Roblox Client", "Roblox Player",
+            "Roblox Beta", "Roblox Test Client", 
+            "RobloxPlayerBeta", "RobloxStudioBeta", 
+            "RobloxApp", "RobloxMobile"
+        },
+        networkThrottling = {
+            minDelay = 0.05,
+            maxCallsPerMinute = 100,
+            adaptiveThreshold = 0.8
+        },
+        latencyRange = {min = 50, max = 100},
+        obfuscationKey = 0x35ACED, -- Chave para criptografia de strings
+        randomNoiseInterval = 10,
+        dynamicObfuscationInterval = 30,
+        behaviorMonitoring = {
+            anomalyThreshold = 0.7,
+            learningRate = 0.01,
+            historySize = 100
         }
-        
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/4r8z/Mist.lol/refs/heads/main/MistCamlockOP", true))()
-    end,
-})
-
-local Button = LockTab:Button({
-    Title = "SilentAim",
-    Desc = "Fov And Hood",
-    Callback = function()
-        getgenv().Silent = {
-            Settings = {
-                Toggled = true,
-                AimPart = "UpperTorso",
-                HitChance = 9999,
-                Prediction = {
-                    Toggled = true,
-                    Value = 0.124231,
-                    AutoPred = false,
-                    JumpOffset = 0.08,
-                    AntiGroundShots = true,
-                    Resolve = false,
-                },
-                Circle = {
-                    Visible = true,
-                    Transparency = 0.5,
-                    Thickness = 3,
-                    NumSides = 100,
-                    Radius = 100,
-                    Filled = false,
-                },
-                RainbowTarget = true,
-                WallCheck = true,
-                AutoShoot = false,
-                BulletTp = false,
-                FriendCheck = false,
-            },
-        }
-        
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/hi999999-max/silent-aim/refs/heads/main/Better-Silent-Aim", true))()
-    end,
-})
-
-local Button = LockTab:Button({
-    Title = "AntiLock",
-    Desc = "Op Anti Lock ",
-    Callback = function()
-        loadstring(game:HttpGet('https://raw.githubusercontent.com/wenny69420/KirbswareScripts/main/MobileV3'))()
-    end,
-})
-
-local Button = LockTab:Button({
-    Title = "Triggerbot",
-    Desc = "Delay.249 | Pred 0.19",
-    Callback = function()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/ggslashtraced/Triggerbot/refs/heads/main/Triggerbotmain.lua"))()
-    end,
-})
-
-local VisualTab = Window:Tab({
-    Title = "Visual",
-    Icon = "77950337029829", -- lucide or rbxassetid
-})
-
-local Section = VisualTab:Section({ 
-    Title = "Player",
-    TextXAlignment = "Left",
-    TextSize = 17, -- Default Size
-})
-
-local Button = VisualTab:Button({
-    Title = "Esp Box ",
-    Desc = "Universal",
-    Callback = function()
-        local ESP = {}
-local camera = workspace.CurrentCamera
-local RunService = game:GetService("RunService")
-local UserInputService = game:GetService("UserInputService")
-local WorldToViewportPoint = camera.WorldToViewportPoint
-
-local function Create2DESP(model)
-    if not model or not model.Parent then return end
-    
-    if ESP[model] then return end
-    
-    local drawings = {
-        box = Drawing.new("Square")
     }
-    
-    local box = drawings.box
-    box.Thickness = 1
-    box.Color = Color3.fromRGB(255, 255, 255)
-    box.Transparency = 1
-    box.Filled = false
-    box.Visible = false
-    
-    ESP[model] = drawings
-end
 
-local updateConnection = RunService.PreRender:Connect(function()
-    for model, drawings in pairs(ESP) do
-        local rootPart = model:FindFirstChild("humanoid_root_part")
-        if not rootPart then 
-            drawings.box.Visible = false
-            continue 
+    local state = {
+        networkCalls = {},
+        lastNetworkSend = tick(),
+        randomNoiseTimer = tick(),
+        latencyOffset = math.random(config.latencyRange.min, config.latencyRange.max) / 1000,
+        obfuscationSeed = math.random(1, 1000000),
+        behaviorHistory = {},
+        anomalyScore = 0
+    }
+
+    -- Utilitário: Criptografia Avançada de Strings
+    local CryptoUtil = {}
+
+    function CryptoUtil.encrypt(input, key)
+        if not input or not key then return input end
+        
+        local result = {}
+        local keyLength = #tostring(key)
+        
+        for i = 1, #input do
+            local inputByte = string.byte(input, i)
+            local keyByte = string.byte(tostring(key), ((i - 1) % keyLength) + 1)
+            
+            -- Aplicar criptografia XOR com camadas adicionais de complexidade
+            local encryptedByte = bit32.bxor(inputByte, keyByte)
+            encryptedByte = bit32.bxor(encryptedByte, bit32.band(key, 0xFF))
+            encryptedByte = bit32.bxor(encryptedByte, bit32.rshift(key, 8))
+            
+            table.insert(result, string.char(encryptedByte))
         end
         
-        local rootCFrame = rootPart.CFrame
-        local rootPos = rootCFrame.Position
-        local upVectorY = rootCFrame.UpVector.Y
-        local screenPos, onScreen = WorldToViewportPoint(camera, rootPos)
+        return table.concat(result)
+    end
+
+    function CryptoUtil.decrypt(input, key)
+        if not input or not key then return input end
         
-        if onScreen then
-            local offset = Vector3.new(0, 3 * math.abs(upVectorY), 0)
-            local topPos = WorldToViewportPoint(camera, rootPos + offset)
-            local bottomPos = WorldToViewportPoint(camera, rootPos - offset)
+        local result = {}
+        local keyLength = #tostring(key)
+        
+        for i = 1, #input do
+            local inputByte = string.byte(input, i)
+            local keyByte = string.byte(tostring(key), ((i - 1) % keyLength) + 1)
             
-            local height = math.abs(topPos.Y - bottomPos.Y)
-            local width = height * 0.6
+            -- Reverter processo de criptografia XOR com camadas inversas
+            local decryptedByte = bit32.bxor(inputByte, bit32.rshift(key, 8))
+            decryptedByte = bit32.bxor(decryptedByte, bit32.band(key, 0xFF))
+            decryptedByte = bit32.bxor(decryptedByte, keyByte)
             
-            drawings.box.Size = Vector2.new(width, height)
-            drawings.box.Position = Vector2.new(screenPos.X - width/2, screenPos.Y - height/2)
-            drawings.box.Visible = true
+            table.insert(result, string.char(decryptedByte))
+        end
+        
+        return table.concat(result)
+    end
+
+    -- Função de geração de chave dinâmica
+    function CryptoUtil.generateKey(seed)
+        seed = seed or math.random(1, 0xFFFFFFFF)
+        return bit32.bxor(seed, bit32.lshift(seed, 16))
+    end
+
+    -- Utilitário: Obfuscação Dinâmica de Tabelas
+    local function obfuscateTable(inputTable, seed)
+        local obfuscated = {}
+        for k, v in pairs(inputTable) do
+            local obfuscatedKey = advancedEncrypt(tostring(k), seed)
+            if type(v) == "string" then
+                obfuscated[obfuscatedKey] = advancedEncrypt(v, seed)
+            elseif type(v) == "table" then
+                obfuscated[obfuscatedKey] = obfuscateTable(v, seed + 1)
+            else
+                obfuscated[obfuscatedKey] = v
+            end
+        end
+        return obfuscated
+    end
+
+    -- Utilitário: Simulação Avançada de Processos Ativos
+    local function simulateActivity()
+        local activities = {
+            "[System] Initializing components...",
+            "[Info] Synchronizing data...",
+            "[Warning] Potential memory leak detected.",
+            "[Debug] Optimizing rendering pipeline...",
+            "[Network] Establishing secure connection...",
+            "[Performance] Analyzing resource usage...",
+            "[Security] Scanning for potential threats..."
+        }
+        return activities[math.random(1, #activities)]
+    end
+
+    -- Obfuscação Avançada de Logs com Injeção de Ruído
+    local function filterLogs()
+        local logService = game:GetService("LogService")
+        local originalConnect = logService.MessageOut.Connect
+
+        safeHookFunction(originalConnect, function(self, callback)
+            return originalConnect(self, function(message)
+                for _, pattern in ipairs(config.blockedPatterns) do
+                    if message:lower():find(pattern:lower()) then
+                        return
+                    end
+                end
+                if tick() - state.randomNoiseTimer >= config.randomNoiseInterval then
+                    state.randomNoiseTimer = tick()
+                    callback(simulateActivity())
+                end
+                callback(message)
+            end)
+        end)
+    end
+
+    -- Máscara Dinâmica do Executor com Rotação
+    local function maskExecutor()
+        getgenv().identifyexecutor = function()
+            local index = (tick() % #config.fakeExecutors) + 1
+            return config.fakeExecutors[index]
+        end
+    end
+
+    -- Simulação de Latência com Ajuste Avançado e Variabilidade
+    local function simulateLatency()
+        local originalTick = tick
+
+        getgenv().tick = function()
+            local frameVariance = math.random(-10, 10) / 1000
+            local networkVariance = math.random(-5, 5) / 1000
+            state.latencyOffset = state.latencyOffset + frameVariance + networkVariance
+            return originalTick() + state.latencyOffset
+        end
+    end
+
+    -- Detecção e Redirecionamento Avançado de Funções Sensíveis
+    local function bypassSensitiveFunctions()
+        local sensitiveFunctions = {
+            "warn", "error", "debug.traceback", "assert"
+        }
+
+        for _, funcName in ipairs(sensitiveFunctions) do
+            local originalFunction = getfenv(0)[funcName]
+            safeHookFunction(originalFunction, function(...)
+                local info = debug.getinfo(2, "Sl")
+                print("[System] Function call intercepted: " .. funcName .. " (Line " .. info.currentline .. ")")
+                return true
+            end)
+        end
+    end
+
+    -- Obfuscação Avançada de Chamadas de Rede com Variabilidade e Adaptação
+    local function obfuscateNetwork()
+        local originalSend = game.ReplicatedStorage.RemoteEvent.FireServer
+
+        game.ReplicatedStorage.RemoteEvent.FireServer = function(self, ...)
+            local args = {...}
+            local encryptedArgs = obfuscateTable(args, state.obfuscationSeed)
+            for key, value in pairs(encryptedArgs) do
+                if type(key) == "string" and key:find(config.obfuscationKey) then
+                    return
+                end
+            end
+
+            local currentTime = tick()
+            if currentTime - state.lastNetworkSend < config.networkThrottling.minDelay then
+                return
+            end
+
+            state.lastNetworkSend = currentTime
+            table.insert(state.networkCalls, currentTime)
+
+            local callsPerMinute = #state.networkCalls
+            if callsPerMinute > config.networkThrottling.maxCallsPerMinute then
+                local excessCalls = callsPerMinute - config.networkThrottling.maxCallsPerMinute
+                if excessCalls / config.networkThrottling.maxCallsPerMinute > config.networkThrottling.adaptiveThreshold then
+                    config.networkThrottling.minDelay = config.networkThrottling.minDelay * 1.1
+                end
+                for i = 1, excessCalls do
+                    table.remove(state.networkCalls, 1)
+                end
+            elseif callsPerMinute < config.networkThrottling.maxCallsPerMinute * 0.9 then
+                config.networkThrottling.minDelay = config.networkThrottling.minDelay * 0.9
+            end
+
+            return originalSend(self, ...)
+        end
+    end
+
+    -- Monitoramento Dinâmico com Limpeza Automática
+    local function dynamicMonitoring()
+        spawn(function()
+            while wait(5) do
+                local currentTime = tick()
+                for i = #state.networkCalls, 1, -1 do
+                    if currentTime - state.networkCalls[i] > 60 then
+                        table.remove(state.networkCalls, i)
+                    end
+                end
+            end
+        end)
+    end
+
+    -- Rotação Dinâmica da Chave de Obfuscação
+    local function rotateObfuscationKey()
+        spawn(function()
+            while wait(config.dynamicObfuscationInterval) do
+                state.obfuscationSeed = math.random(1, 1000000)
+            end
+        end)
+    end
+
+    -- Detecção de Comportamento Anômalo com Aprendizado
+    local function detectAnomalousBehavior(behavior)
+        table.insert(state.behaviorHistory, 1, behavior)
+        if #state.behaviorHistory > config.behaviorMonitoring.historySize then
+            table.remove(state.behaviorHistory)
+        end
+
+        local anomalyScore = 0
+        for _, pastBehavior in ipairs(state.behaviorHistory) do
+            local similarity = 0
+            for i = 1, math.min(#behavior, #pastBehavior) do
+                if behavior[i] == pastBehavior[i] then
+                    similarity = similarity + 1
+                end
+            end
+            similarity = similarity / math.max(#behavior, #pastBehavior)
+            anomalyScore = anomalyScore + (1 - similarity)
+        end
+        anomalyScore = anomalyScore / #state.behaviorHistory
+
+        if anomalyScore > config.behaviorMonitoring.anomalyThreshold then
+            print("[Behavior Monitoring] Anomalous behavior detected. Score: " .. anomalyScore)
+            state.anomalyScore = state.anomalyScore + config.behaviorMonitoring.learningRate * (anomalyScore - state.anomalyScore)
         else
-            drawings.box.Visible = false
+            state.anomalyScore = state.anomalyScore - config.behaviorMonitoring.learningRate * state.anomalyScore
+        end
+
+        return anomalyScore
+    end
+
+    -- Monitorar Comportamento em Chamadas de Rede
+    local function monitorNetworkBehavior()
+        local originalSend = game.ReplicatedStorage.RemoteEvent.FireServer
+
+        game.ReplicatedStorage.RemoteEvent.FireServer = function(self, ...)
+            local args = {...}
+            local behavior = {self.Name, unpack(args)}
+            local anomalyScore = detectAnomalousBehavior(behavior)
+
+            if anomalyScore > config.behaviorMonitoring.anomalyThreshold then
+                return
+            end
+
+            return originalSend(self, ...)
         end
     end
-end)
 
-local characters = workspace:WaitForChild("characters")
-if characters then
-    for _, model in ipairs(characters:GetChildren()) do
-        task.spawn(function()
-            Create2DESP(model)
+    -- Monitorar Comportamento em Logs
+    local function monitorLogBehavior()
+        local logService = game:GetService("LogService")
+        local originalConnect = logService.MessageOut.Connect
+
+        safeHookFunction(originalConnect, function(self, callback)
+            return originalConnect(self, function(message)
+                if not message or type(message) ~= "string" then
+                    return
+                end
+
+                local behavior = {message}
+                local anomalyScore = detectAnomalousBehavior(behavior)
+
+                if anomalyScore > config.behaviorMonitoring.anomalyThreshold then
+                    return
+                end
+
+                callback(message)
+            end)
         end)
     end
-    
-    characterAddedConnection = characters.ChildAdded:Connect(function(model)
-        task.wait(0.5)
-        task.spawn(function()
-            Create2DESP(model)
-        end)
-    end)
-    
-    characterRemovedConnection = characters.ChildRemoved:Connect(function(model)
-        if ESP[model] then
-            ESP[model].box:Remove()
-            ESP[model] = nil
-        end
-    end)
+
+    -- Inicializar
+    filterLogs()
+    maskExecutor()
+    simulateLatency()
+    bypassSensitiveFunctions()
+    obfuscateNetwork()
+    dynamicMonitoring()
+    rotateObfuscationKey()
+    monitorNetworkBehavior()
+    monitorLogBehavior()
 end
-
-local function CleanupESP()
-    for _, drawings in pairs(ESP) do
-        drawings.box:Remove()
-    end
-    ESP = {}
-    
-    if updateConnection then
-        updateConnection:Disconnect()
-    end
-    if characterAddedConnection then
-        characterAddedConnection:Disconnect()
-    end
-    if characterRemovedConnection then
-        characterRemovedConnection:Disconnect()
-    end
-end
-
-game:GetService("UserInputService").InputBegan:Connect(function(input)
-    if input.KeyCode == Enum.KeyCode.RightControl then
-        CleanupESP()
-    end
-end)
-    end,
-})
-
-local Button = VisualTab:Button({
-    Title = "Esp Highlight",
-    Desc = "Universal",
-    Callback = function()
-        local FillColor = Color3.fromRGB(175,25,255)
-local DepthMode = "AlwaysOnTop"
-local FillTransparency = 0.5
-local OutlineColor = Color3.fromRGB(255,255,255)
-local OutlineTransparency = 0
-
-local CoreGui = game:FindService("CoreGui")
-local Players = game:FindService("Players")
-local lp = Players.LocalPlayer
-local connections = {}
-
-local Storage = Instance.new("Folder")
-Storage.Parent = CoreGui
-Storage.Name = "Highlight_Storage"
-
-local function Highlight(plr)
-    local Highlight = Instance.new("Highlight")
-    Highlight.Name = plr.Name
-    Highlight.FillColor = FillColor
-    Highlight.DepthMode = DepthMode
-    Highlight.FillTransparency = FillTransparency
-    Highlight.OutlineColor = OutlineColor
-    Highlight.OutlineTransparency = 0
-    Highlight.Parent = Storage
-    
-    local plrchar = plr.Character
-    if plrchar then
-        Highlight.Adornee = plrchar
-    end
-
-    connections[plr] = plr.CharacterAdded:Connect(function(char)
-        Highlight.Adornee = char
-    end)
-end
-
-Players.PlayerAdded:Connect(Highlight)
-for i,v in next, Players:GetPlayers() do
-    Highlight(v)
-end
-
-Players.PlayerRemoving:Connect(function(plr)
-    local plrname = plr.Name
-    if Storage[plrname] then
-        Storage[plrname]:Destroy()
-    end
-    if connections[plr] then
-        connections[plr]:Disconnect()
-    end
-end)
-    end,
-})
