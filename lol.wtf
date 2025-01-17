@@ -1,328 +1,235 @@
-function setup_bypass()
-    -- Configurações gerais
-    local config = {
-        blockedPatterns = {
-            -- Padrões de detecção de cheat mais abrangentes
-            "Cheat", "Exploit", "Hack", "Script", "Inject", 
-            "Memory", "Speed", "Teleport", "Noclip", "Fly",
-            
-            -- Padrões adicionais de segurança
-            "Bypass", "Macro", "AutoFarm", "WallHack", "AimBot", 
-            "SpeedHack", "NoClip", "InfiniteResource", "ModifiedClient",
-            
-            -- Termos relacionados a modificações de jogo
-            "GameModifier", "ClientModification", "RuntimePatch", 
-            "MemoryManipulation", "ProcessInjection"
-        },
-        fakeExecutors = {
-            "Roblox Studio", "Roblox Client", "Roblox Player",
-            "Roblox Beta", "Roblox Test Client", 
-            "RobloxPlayerBeta", "RobloxStudioBeta", 
-            "RobloxApp", "RobloxMobile"
-        },
-        networkThrottling = {
-            minDelay = 0.05,
-            maxCallsPerMinute = 100,
-            adaptiveThreshold = 0.8
-        },
-        latencyRange = {min = 50, max = 100},
-        obfuscationKey = 0x35ACED, -- Chave para criptografia de strings
-        randomNoiseInterval = 10,
-        dynamicObfuscationInterval = 30,
-        behaviorMonitoring = {
-            anomalyThreshold = 0.7,
-            learningRate = 0.01,
-            historySize = 100
+local WindUI = loadstring(game:HttpGet("https://tree-hub.vercel.app/api/UI/WindUI"))()
+local Version = "1.4.0"
+local WindUI = loadstring(game:HttpGet("https://tree-hub.vercel.app/api/UI/WindUI/" .. Version))()
+
+local Window = WindUI:CreateWindow({
+    Title = "lol.wtf", -- UI Title
+    Icon = "https://cdn.discordapp.com/attachments/1327852730533806163/1328898819181645875/1000003223-removebg-preview.png?ex=678a5b38&is=678909b8&hm=2d716824bb46e2f1aff5513023f0f6f11362de64e87d94d40c5c3a55fb188c33&", -- Url or rbxassetid or lucide
+    Author = "Scoot", -- Author & Creator
+    Folder = "Scoot", -- Folder name for saving data (And key)
+    Size = UDim2.fromOffset(580, 460), -- UI Size
+    KeySystem = { -- Creates key system
+        Key = "lol.wtfe35efeafee9cd5c78dd3be3f02fa469af441", -- key
+        Note = "Da Hood Script", -- Note
+        URL = "discord.gg/YezNnKQZFw", -- URL To get key (example: Discord)
+        SaveKey = true, -- Saves the key in the folder specified above
+    }, 
+    Transparent = true,-- UI Transparency
+    Theme = "Dark", -- UI Theme
+    SideBarWidth = 170, -- UI Sidebar Width (number)
+    HasOutline = true, -- Adds Outlines to the window
+})
+
+Window:EditOpenButton({
+    Title = "lol.wtf",
+    Icon = "https://cdn.discordapp.com/attachments/1327852730533806163/1328898819181645875/1000003223-removebg-preview.png?ex=678a5b38&is=678909b8&hm=2d716824bb46e2f1aff5513023f0f6f11362de64e87d94d40c5c3a55fb188c33&",
+    CornerRadius = UDim.new(0,10),
+    StrokeThickness = 2,
+    Color = ColorSequence.new( -- gradient
+        Color3.fromHex("000000"),
+        Color3.fromHex("000000")
+    )
+})
+
+local Notification = WindUI:Notify({
+    Title = "lol.wtf Online KSKSKSKS",
+    Content = "discord.gg/YezNnKQZFw",
+    Duration = 5,
+})
+
+local LockTab = Window:Tab({
+    Title = "Lock",
+    Icon = "security"
+})
+
+local Section = LockTab:Section({ 
+    Title = "Player",
+    TextXAlignment = "Left",
+    TextSize = 17, -- Default Size
+})
+
+local Button = LockTab:Button({
+    Title = "CamLock",
+    Desc = "Key.Code Q",
+    Callback = function()
+        getgenv().Mist = {
+            ["Main"] = {
+                ["Prediction"] = 0.1666279438888,
+                ["AutoPrediction"] = false,-- // 100 ping
+                ["AimPart"] = "HumanoidRootPart",
+                ["ToggleKey"] = "q" -- // FOR PC
+            },
+            ["Misc"] = {
+                ["AutoAir"] = true,
+                ["AntiGroundShots"] = true -- // keep this true for better experience
+            }
         }
-    }
-
-    local state = {
-        networkCalls = {},
-        lastNetworkSend = tick(),
-        randomNoiseTimer = tick(),
-        latencyOffset = math.random(config.latencyRange.min, config.latencyRange.max) / 1000,
-        obfuscationSeed = math.random(1, 1000000),
-        behaviorHistory = {},
-        anomalyScore = 0
-    }
-
-    -- Utilitário: Criptografia Avançada de Strings
-    local CryptoUtil = {}
-
-    function CryptoUtil.encrypt(input, key)
-        if not input or not key then return input end
         
-        local result = {}
-        local keyLength = #tostring(key)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/4r8z/Mist.lol/refs/heads/main/MistCamlockOP", true))()
+    end,
+})
+
+local Button = LockTab:Button({
+    Title = "Silent Aim",
+    Desc = "Fov On",
+    Callback = function()
+        local SilentSettings = {
+            IsTargetting = true,
+            Prediction = 0.157, 
+            TargetPart = "HumanoidRootPart",
+            WallCheck = true,
+            FOV = {
+                Radius = 50,
+                Visible = true
+            }
+        }
         
-        for i = 1, #input do
-            local inputByte = string.byte(input, i)
-            local keyByte = string.byte(tostring(key), ((i - 1) % keyLength) + 1)
-            
-            -- Aplicar criptografia XOR com camadas adicionais de complexidade
-            local encryptedByte = bit32.bxor(inputByte, keyByte)
-            encryptedByte = bit32.bxor(encryptedByte, bit32.band(key, 0xFF))
-            encryptedByte = bit32.bxor(encryptedByte, bit32.rshift(key, 8))
-            
-            table.insert(result, string.char(encryptedByte))
+        local Inset = game:GetService("GuiService"):GetGuiInset().Y
+        local Mouse = game.Players.LocalPlayer:GetMouse()
+        local Client = game.Players.LocalPlayer
+        local Cam = workspace.CurrentCamera
+        
+        local FOV = Drawing.new("Circle")
+        FOV.Transparency = 0.5
+        FOV.Thickness = 1.6
+        FOV.Color = Color3.fromRGB(230, 230, 250)
+        FOV.Filled = false
+        
+        -- Function to update FOV
+        local function UpdateFOV(Radius)
+            if not FOV then return end
+            FOV.Position = Vector2.new(Mouse.X, Mouse.Y + Inset)
+            FOV.Visible = SilentSettings.FOV.Visible
+            FOV.Radius = Radius * 3.067
         end
         
-        return table.concat(result)
-    end
-
-    function CryptoUtil.decrypt(input, key)
-        if not input or not key then return input end
+        -- Coroutine to continuously update FOV
+        task.spawn(function()
+            while true do
+                task.wait()
+                UpdateFOV(SilentSettings.FOV.Radius)
+            end
+        end)
         
-        local result = {}
-        local keyLength = #tostring(key)
-        
-        for i = 1, #input do
-            local inputByte = string.byte(input, i)
-            local keyByte = string.byte(tostring(key), ((i - 1) % keyLength) + 1)
-            
-            -- Reverter processo de criptografia XOR com camadas inversas
-            local decryptedByte = bit32.bxor(inputByte, bit32.rshift(key, 8))
-            decryptedByte = bit32.bxor(decryptedByte, bit32.band(key, 0xFF))
-            decryptedByte = bit32.bxor(decryptedByte, keyByte)
-            
-            table.insert(result, string.char(decryptedByte))
-        end
-        
-        return table.concat(result)
-    end
-
-    -- Função de geração de chave dinâmica
-    function CryptoUtil.generateKey(seed)
-        seed = seed or math.random(1, 0xFFFFFFFF)
-        return bit32.bxor(seed, bit32.lshift(seed, 16))
-    end
-
-    -- Utilitário: Obfuscação Dinâmica de Tabelas
-    local function obfuscateTable(inputTable, seed)
-        local obfuscated = {}
-        for k, v in pairs(inputTable) do
-            local obfuscatedKey = advancedEncrypt(tostring(k), seed)
-            if type(v) == "string" then
-                obfuscated[obfuscatedKey] = advancedEncrypt(v, seed)
-            elseif type(v) == "table" then
-                obfuscated[obfuscatedKey] = obfuscateTable(v, seed + 1)
+        -- Function to check for obstacles
+        local function WallCheck(destination, ignoreList)
+            if SilentSettings.WallCheck then
+                local Origin = Cam.CFrame.p
+                local CheckRay = Ray.new(Origin, destination - Origin)
+                local Hit = game.Workspace:FindPartOnRayWithIgnoreList(CheckRay, ignoreList)
+                return Hit == nil
             else
-                obfuscated[obfuscatedKey] = v
-            end
-        end
-        return obfuscated
-    end
-
-    -- Utilitário: Simulação Avançada de Processos Ativos
-    local function simulateActivity()
-        local activities = {
-            "[System] Initializing components...",
-            "[Info] Synchronizing data...",
-            "[Warning] Potential memory leak detected.",
-            "[Debug] Optimizing rendering pipeline...",
-            "[Network] Establishing secure connection...",
-            "[Performance] Analyzing resource usage...",
-            "[Security] Scanning for potential threats..."
-        }
-        return activities[math.random(1, #activities)]
-    end
-
-    -- Obfuscação Avançada de Logs com Injeção de Ruído
-    local function filterLogs()
-        local logService = game:GetService("LogService")
-        local originalConnect = logService.MessageOut.Connect
-
-        safeHookFunction(originalConnect, function(self, callback)
-            return originalConnect(self, function(message)
-                for _, pattern in ipairs(config.blockedPatterns) do
-                    if message:lower():find(pattern:lower()) then
-                        return
-                    end
-                end
-                if tick() - state.randomNoiseTimer >= config.randomNoiseInterval then
-                    state.randomNoiseTimer = tick()
-                    callback(simulateActivity())
-                end
-                callback(message)
-            end)
-        end)
-    end
-
-    -- Máscara Dinâmica do Executor com Rotação
-    local function maskExecutor()
-        getgenv().identifyexecutor = function()
-            local index = (tick() % #config.fakeExecutors) + 1
-            return config.fakeExecutors[index]
-        end
-    end
-
-    -- Simulação de Latência com Ajuste Avançado e Variabilidade
-    local function simulateLatency()
-        local originalTick = tick
-
-        getgenv().tick = function()
-            local frameVariance = math.random(-10, 10) / 1000
-            local networkVariance = math.random(-5, 5) / 1000
-            state.latencyOffset = state.latencyOffset + frameVariance + networkVariance
-            return originalTick() + state.latencyOffset
-        end
-    end
-
-    -- Detecção e Redirecionamento Avançado de Funções Sensíveis
-    local function bypassSensitiveFunctions()
-        local sensitiveFunctions = {
-            "warn", "error", "debug.traceback", "assert"
-        }
-
-        for _, funcName in ipairs(sensitiveFunctions) do
-            local originalFunction = getfenv(0)[funcName]
-            safeHookFunction(originalFunction, function(...)
-                local info = debug.getinfo(2, "Sl")
-                print("[System] Function call intercepted: " .. funcName .. " (Line " .. info.currentline .. ")")
                 return true
-            end)
+            end
         end
-    end
-
-    -- Obfuscação Avançada de Chamadas de Rede com Variabilidade e Adaptação
-    local function obfuscateNetwork()
-        local originalSend = game.ReplicatedStorage.RemoteEvent.FireServer
-
-        game.ReplicatedStorage.RemoteEvent.FireServer = function(self, ...)
-            local args = {...}
-            local encryptedArgs = obfuscateTable(args, state.obfuscationSeed)
-            for key, value in pairs(encryptedArgs) do
-                if type(key) == "string" and key:find(config.obfuscationKey) then
-                    return
-                end
-            end
-
-            local currentTime = tick()
-            if currentTime - state.lastNetworkSend < config.networkThrottling.minDelay then
-                return
-            end
-
-            state.lastNetworkSend = currentTime
-            table.insert(state.networkCalls, currentTime)
-
-            local callsPerMinute = #state.networkCalls
-            if callsPerMinute > config.networkThrottling.maxCallsPerMinute then
-                local excessCalls = callsPerMinute - config.networkThrottling.maxCallsPerMinute
-                if excessCalls / config.networkThrottling.maxCallsPerMinute > config.networkThrottling.adaptiveThreshold then
-                    config.networkThrottling.minDelay = config.networkThrottling.minDelay * 1.1
-                end
-                for i = 1, excessCalls do
-                    table.remove(state.networkCalls, 1)
-                end
-            elseif callsPerMinute < config.networkThrottling.maxCallsPerMinute * 0.9 then
-                config.networkThrottling.minDelay = config.networkThrottling.minDelay * 0.9
-            end
-
-            return originalSend(self, ...)
-        end
-    end
-
-    -- Monitoramento Dinâmico com Limpeza Automática
-    local function dynamicMonitoring()
-        spawn(function()
-            while wait(5) do
-                local currentTime = tick()
-                for i = #state.networkCalls, 1, -1 do
-                    if currentTime - state.networkCalls[i] > 60 then
-                        table.remove(state.networkCalls, i)
+        
+        -- Function to find the closest character
+        local function GetClosestChar()
+            local ClosestDistance = math.huge
+            local ClosestCharacter = nil
+            
+            for _, player in ipairs(game.Players:GetPlayers()) do
+                if player ~= Client and player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+                    local Character = player.Character
+                    local RootPart = Character.HumanoidRootPart
+                    local Position, OnScreen = Cam:WorldToScreenPoint(RootPart.Position)
+                    local Distance = (Vector2.new(Position.X, Position.Y) - Vector2.new(Mouse.X, Mouse.Y)).Magnitude
+                    
+                    if FOV.Radius > Distance and Distance < ClosestDistance and OnScreen and
+                        WallCheck(RootPart.Position, {Client, Character}) then
+                        ClosestDistance = Distance
+                        ClosestCharacter = player
                     end
                 end
             end
-        end)
-    end
-
-    -- Rotação Dinâmica da Chave de Obfuscação
-    local function rotateObfuscationKey()
-        spawn(function()
-            while wait(config.dynamicObfuscationInterval) do
-                state.obfuscationSeed = math.random(1, 1000000)
-            end
-        end)
-    end
-
-    -- Detecção de Comportamento Anômalo com Aprendizado
-    local function detectAnomalousBehavior(behavior)
-        table.insert(state.behaviorHistory, 1, behavior)
-        if #state.behaviorHistory > config.behaviorMonitoring.historySize then
-            table.remove(state.behaviorHistory)
+            
+            return ClosestCharacter
         end
-
-        local anomalyScore = 0
-        for _, pastBehavior in ipairs(state.behaviorHistory) do
-            local similarity = 0
-            for i = 1, math.min(#behavior, #pastBehavior) do
-                if behavior[i] == pastBehavior[i] then
-                    similarity = similarity + 1
+        
+        -- Hook method to override mouse hit
+        local OldIndex = hookmetamethod(game, "__index", function(self, key)
+            if self:IsA("Mouse") and key == "Hit" then
+                local Target = GetClosestChar()
+                if Target then
+                    local TargetPart = Target.Character[SilentSettings.TargetPart]
+                    if TargetPart then
+                        return TargetPart.CFrame + (TargetPart.Velocity * SilentSettings.Prediction)
+                    end
                 end
             end
-            similarity = similarity / math.max(#behavior, #pastBehavior)
-            anomalyScore = anomalyScore + (1 - similarity)
-        end
-        anomalyScore = anomalyScore / #state.behaviorHistory
-
-        if anomalyScore > config.behaviorMonitoring.anomalyThreshold then
-            print("[Behavior Monitoring] Anomalous behavior detected. Score: " .. anomalyScore)
-            state.anomalyScore = state.anomalyScore + config.behaviorMonitoring.learningRate * (anomalyScore - state.anomalyScore)
-        else
-            state.anomalyScore = state.anomalyScore - config.behaviorMonitoring.learningRate * state.anomalyScore
-        end
-
-        return anomalyScore
-    end
-
-    -- Monitorar Comportamento em Chamadas de Rede
-    local function monitorNetworkBehavior()
-        local originalSend = game.ReplicatedStorage.RemoteEvent.FireServer
-
-        game.ReplicatedStorage.RemoteEvent.FireServer = function(self, ...)
-            local args = {...}
-            local behavior = {self.Name, unpack(args)}
-            local anomalyScore = detectAnomalousBehavior(behavior)
-
-            if anomalyScore > config.behaviorMonitoring.anomalyThreshold then
-                return
-            end
-
-            return originalSend(self, ...)
-        end
-    end
-
-    -- Monitorar Comportamento em Logs
-    local function monitorLogBehavior()
-        local logService = game:GetService("LogService")
-        local originalConnect = logService.MessageOut.Connect
-
-        safeHookFunction(originalConnect, function(self, callback)
-            return originalConnect(self, function(message)
-                if not message or type(message) ~= "string" then
-                    return
-                end
-
-                local behavior = {message}
-                local anomalyScore = detectAnomalousBehavior(behavior)
-
-                if anomalyScore > config.behaviorMonitoring.anomalyThreshold then
-                    return
-                end
-
-                callback(message)
-            end)
+            return OldIndex(self, key)
         end)
-    end
+    end,
+})
 
-    -- Inicializar
-    filterLogs()
-    maskExecutor()
-    simulateLatency()
-    bypassSensitiveFunctions()
-    obfuscateNetwork()
-    dynamicMonitoring()
-    rotateObfuscationKey()
-    monitorNetworkBehavior()
-    monitorLogBehavior()
+local Button = LockTab:Button({
+    Title = "HitBox",
+    Desc = "All Games",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Feimgps/Feimgps/refs/heads/main/HitboxExpander"))()
+    end,
+})
+
+local Button = LockTab:Button({
+    Title = "Resolver",
+    Desc = "Op Resolver",
+    Callback = function()
+        while true do
+            heartbeat:Wait()
+            if target == true then
+                local character = game.Players[targetplr].Character.HumanoidRootPart
+                local lastPosition = character.Position
+                task.wait()
+                local currentPosition = character.Position
+                local velocity = (currentPosition - lastPosition) * 0
+                character.AssemblyLinerVelocity = velocity
+                character.Velocity = velocity
+            end
+        end
+    end,
+})
+
+local Button = LockTab:Button({
+    Title = "Auto Stomp",
+    Desc = "Key.Code H",
+    Callback = function()
+        local Loop 
+local loopFunction = function()
+    game:GetService("ReplicatedStorage").MainEvent:FireServer("Stomp")
 end
+
+local Start = function()
+    Loop = game:GetService("RunService").Heartbeat:Connect(loopFunction)
+end
+
+local Pause = function()
+    if Loop then
+        Loop:Disconnect()
+        Loop = nil
+    end
+end
+
+local isAutoStompActive = false
+
+local UserInputService = game:GetService("UserInputService")
+UserInputService.InputBegan:Connect(function(input, gameProcessedEvent)
+    if gameProcessedEvent then return end
+    if input.KeyCode == Enum.KeyCode.H then
+        isAutoStompActive = not isAutoStompActive
+        if isAutoStompActive then
+            Start()
+        else
+            Pause()
+        end
+    end
+end)
+    end,
+})
+
+local Button = LockTab:Button({
+    Title = "AntiLock",
+    Desc = "Da Hood All",
+    Callback = function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/Gwaporoblox/Sub-to-vascal/main/Vascal-antilock-button"))()
+    end,
+})
